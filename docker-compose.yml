@@ -1,0 +1,19 @@
+version: "3.9"
+
+services:
+  postgres:
+    image: postgres:15
+    container_name: ascana-postgres
+    restart: always
+    ports:
+      - "5432:5432"
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: verydifficultpassword09876
+      POSTGRES_DB: ascana
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+      # - ./docker/postgres/init.sql:/docker-entrypoint-initdb.d/init.sql # если нужно выполнить SQL при старте
+
+volumes:
+  pgdata:
