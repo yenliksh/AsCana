@@ -1,8 +1,21 @@
 import React from "react";
 import styled from "styled-components/native";
 import { View, Image } from "react-native";
+import { useAuth } from "../../../contexts/authContexts";
+import { SafeAreaView } from "react-native-safe-area-context";
+import { useNavigation } from "@react-navigation/native";
 
 const HomeScreen = () => {
+  const { logout } = useAuth();
+  const navigation = useNavigation();
+
+  const handleScan = async () => {
+    // Mock scan result (you can replace with real barcode scanner later)
+    navigation.navigate("Scanner");
+
+    //  navigation.navigate("ProductDetails", { barcode });
+  };
+
   return (
     <Container>
       <TopRow>
@@ -14,7 +27,7 @@ const HomeScreen = () => {
 
       <HeroImage source={require("../../../assets/scan-illustration.png")} />
 
-      <ScanButton>
+      <ScanButton onPress={handleScan}>
         <ScanText>📷 Scan a Product</ScanText>
       </ScanButton>
 
@@ -28,12 +41,11 @@ const HomeScreen = () => {
 };
 
 export default HomeScreen;
-const Container = styled.View`
+const Container = styled(SafeAreaView)`
   flex: 1;
   padding: 28px 24px;
   background-color: ${({ theme }) => theme.colors.background};
 `;
-
 const TopRow = styled.View`
   flex-direction: row;
   justify-content: space-between;

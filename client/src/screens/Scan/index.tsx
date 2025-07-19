@@ -1,49 +1,36 @@
-import React from "react";
-import { View, Text } from "react-native";
-import styled from "styled-components/native";
-import { useNavigation } from "@react-navigation/native";
+import React, { useState } from "react";
+import { Text, View, StyleSheet, Button } from "react-native";
 
-const ScanScreen = () => {
-  const navigation = useNavigation();
+export default function ScannerScreen() {
+  const [data, setData] = useState<string | null>(null);
 
-  const handleScan = () => {
-    // Mock scan result (you can replace with real barcode scanner later)
-    const barcode = "1234567890123";
-    navigation.navigate("ProductDetails", { barcode });
+  const fakeBarcode = "1234567890ABC"; // <- захардкоженный штрихкод
+
+  const handleFakeScan = () => {
+    setData(fakeBarcode);
+    alert(`Сканировано (тест): ${fakeBarcode}`);
   };
 
   return (
-    <Container>
-      <Title>Scan Product</Title>
-      <ScanButton onPress={handleScan}>
-        <ButtonText>📷 Scan</ButtonText>
-      </ScanButton>
-    </Container>
+    <View style={styles.container}>
+      <Button title="Симулировать сканирование" onPress={handleFakeScan} />
+      {data && <Text style={styles.resultText}>Результат: {data}</Text>}
+    </View>
   );
-};
+}
 
-export default ScanScreen;
-
-const Container = styled.View`
-  flex: 1;
-  justify-content: center;
-  align-items: center;
-  background-color: ${({ theme }) => theme.colors.background};
-`;
-
-const Title = styled.Text`
-  font-size: ${({ theme }) => theme.fontSizes.large}px;
-  margin-bottom: 20px;
-  color: ${({ theme }) => theme.colors.text};
-`;
-
-const ScanButton = styled.TouchableOpacity`
-  background-color: ${({ theme }) => theme.colors.primary};
-  padding: ${({ theme }) => theme.spacing.m}px;
-  border-radius: ${({ theme }) => theme.borderRadius.m}px;
-`;
-
-const ButtonText = styled.Text`
-  color: white;
-  font-size: ${({ theme }) => theme.fontSizes.medium}px;
-`;
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    justifyContent: "center",
+    padding: 20,
+  },
+  resultText: {
+    marginTop: 20,
+    fontSize: 16,
+    textAlign: "center",
+    backgroundColor: "#eee",
+    padding: 10,
+    borderRadius: 8,
+  },
+});
